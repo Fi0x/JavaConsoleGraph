@@ -30,7 +30,7 @@ public class Transformer
      * Get a correctly formatted {@link String} that will print out a table.
      * @param columnHeaders The headers of each column that the table should have.
      * @param columns The individual entries of each column.
-     * @return A correctly formatted string that will create a table with the provided headers and entries.
+     * @return A correctly formatted {@link String} that will create a table with the provided headers and entries.
      */
     public String getTable(String[] columnHeaders, String[][] columns)
     {
@@ -76,8 +76,46 @@ public class Transformer
         tableInstance.padding = entryPadding;
     }
 
-    public String getGraphString()
+    /**
+     * Get a correctly formatted {@link String} that will print out a graph.
+     * @param values The individual values that get mapped on the xAxis.
+     * @return A correctly formatted {@link String}-Array that represents a graph. Can be used to create a table.
+     */
+    public String[][] getGraphString(double[] values)
     {
-        return null;
+        String[][] layout = new String[values.length + 1][values.length + 1];
+
+        layout[0][0] = graphInstance.yAxisName;
+        for(int i = 1; i < layout[0].length; i++)
+            layout[0][layout[0].length - i] = "" + (graphInstance.yMin + graphInstance.scaleY * (i - 1));
+
+        for(int columnCount = 1; columnCount < layout.length; columnCount++)
+        {
+            for(int rowCount = 0; rowCount < layout[0].length - 1; rowCount++)
+                layout[columnCount][rowCount] = "";//TODO: Fill with correct values
+
+            layout[columnCount][layout[0].length - 1] = "" + (graphInstance.xMin + graphInstance.scaleX * columnCount);
+        }
+        layout[layout.length - 1][layout[0].length - 1] = graphInstance.xAxisName;
+
+        return layout;
+    }
+    /**
+     * Change the behaviour of the graph formatting.
+     * @param xAxis How the xAxis should be named.
+     * @param yAxis How the yAxis should be named.
+     * @param xMin What the lowest value on the xAxis is.
+     * @param yMin What the lowestValue on the yAxis is.
+     * @param scaleX How large the steps between individual xValues should be.
+     * @param scaleY How large the steps between individual yValues should be.
+     */
+    public void setGraphSettings(String xAxis, String yAxis, double xMin, double yMin, double scaleX, double scaleY)
+    {
+        graphInstance.xAxisName = xAxis;
+        graphInstance.yAxisName = yAxis;
+        graphInstance.xMin = xMin;
+        graphInstance.yMin = yMin;
+        graphInstance.scaleX = scaleX;
+        graphInstance.scaleY = scaleY;
     }
 }
