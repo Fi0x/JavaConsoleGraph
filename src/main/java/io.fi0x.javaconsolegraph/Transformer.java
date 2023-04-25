@@ -46,4 +46,38 @@ public class Transformer
 
         return result.toString();
     }
+    /**
+     * Get a correctly formatted {@link String} that will print out a table.
+     * @param columns The individual columns of the table, including their headers.
+     * @return A correctly formatted string that will create a table with the provided headers and entries.
+     */
+    public String getTable(String[][] columns)
+    {
+        String[] headers = new String[columns.length];
+        String[][] content = new String[columns.length][columns[0].length - 1];
+        for(int column = 0; column < columns.length; column++)
+        {
+            headers[column] = columns[column][0];
+            for(int row = 1; row < columns[0].length; row++)
+                content[column][row - 1] = columns[column][row];
+        }
+        return getTable(headers, content);
+    }
+    /**
+     * Change the behaviour of the table formatting.
+     * @param centeredEntries Weather or not entries should be centered in their column.
+     * @param useSeparators Weather or not separators should be added between columns and rows.
+     * @param entryPadding Weather or not entries should get extra spaces before and after the normal padding.
+     */
+    public void setTableSettings(boolean centeredEntries, boolean useSeparators, int entryPadding)
+    {
+        tableInstance.centered = centeredEntries;
+        tableInstance.separators = useSeparators;
+        tableInstance.padding = entryPadding;
+    }
+
+    public String getGraphString()
+    {
+        return null;
+    }
 }
