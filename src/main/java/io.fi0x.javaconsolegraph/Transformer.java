@@ -1,6 +1,7 @@
 package io.fi0x.javaconsolegraph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Transformer
 {
@@ -83,20 +84,9 @@ public class Transformer
      */
     public String[][] getGraphString(double[] values)
     {
-        String[][] layout = new String[values.length + 1][values.length + 1];
-
-        layout[0][0] = graphInstance.yAxisName;
-        for(int i = 1; i < layout[0].length; i++)
-            layout[0][layout[0].length - i] = "" + (graphInstance.yMin + graphInstance.scaleY * (i - 1));
-
-        for(int columnCount = 1; columnCount < layout.length; columnCount++)
-        {
-            for(int rowCount = 0; rowCount < layout[0].length - 1; rowCount++)
-                layout[columnCount][rowCount] = "";//TODO: Fill with correct values
-
-            layout[columnCount][layout[0].length - 1] = "" + (graphInstance.xMin + graphInstance.scaleX * columnCount);
-        }
-        layout[layout.length - 1][layout[0].length - 1] = graphInstance.xAxisName;
+        String[][] layout = graphInstance.getBlankGraph();
+        graphInstance.updateOutline(layout);
+        graphInstance.fillInValues(layout, values);
 
         return layout;
     }
@@ -109,7 +99,7 @@ public class Transformer
      * @param scaleX How large the steps between individual xValues should be.
      * @param scaleY How large the steps between individual yValues should be.
      */
-    public void setGraphSettings(String xAxis, String yAxis, double xMin, double yMin, double scaleX, double scaleY)
+    public void setGraphSettings(String xAxis, String yAxis, double xMin, double yMin, double scaleX, double scaleY, int xValues, int yValues)
     {
         graphInstance.xAxisName = xAxis;
         graphInstance.yAxisName = yAxis;
@@ -117,5 +107,7 @@ public class Transformer
         graphInstance.yMin = yMin;
         graphInstance.scaleX = scaleX;
         graphInstance.scaleY = scaleY;
+        graphInstance.xSize = xValues;
+        graphInstance.ySize = yValues;
     }
 }
