@@ -1,7 +1,6 @@
 package io.fi0x.javaconsolegraph;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Transformer
 {
@@ -59,8 +58,8 @@ public class Transformer
         for(int column = 0; column < columns.length; column++)
         {
             headers[column] = columns[column][0];
-            for(int row = 1; row < columns[0].length; row++)
-                content[column][row - 1] = columns[column][row];
+            if(columns[0].length - 1 >= 0)
+                System.arraycopy(columns[column], 1, content[column], 0, columns[0].length - 1);
         }
         return getTable(headers, content);
     }
