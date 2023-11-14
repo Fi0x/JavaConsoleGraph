@@ -64,6 +64,22 @@ public class Transformer
         return getTable(headers, content);
     }
     /**
+     * Get a correctly formatted {@link String} that will print out a table.
+     * @param rows The individual rows of the table, including their headers.
+     * @return A correctly formatted string that will create a table with the provided headers and entries.
+     */
+    public String getTable(ArrayList<String[]> rows)
+    {
+        String[] headers = rows.get(0);
+        String[][] content = new String[rows.size() - 1][rows.get(0).length];
+        for(int column = 0; column < rows.get(0).length; column++)
+        {
+            for(int row = 1; row < rows.size(); row++)
+                content[row][column] = rows.get(row)[column];
+        }
+        return getTable(headers, content);
+    }
+    /**
      * Change the behaviour of the table formatting.
      * @param centeredEntries Weather or not entries should be centered in their column.
      * @param useSeparators Weather or not separators should be added between columns and rows.
