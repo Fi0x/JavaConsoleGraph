@@ -6,6 +6,6 @@ A library to modify Strings in java for easier visualization in terminals.
 <dependency>
   <groupId>io.github.Fi0x</groupId>
   <artifactId>JavaConsoleGraph</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
